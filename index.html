@@ -3,9 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AU Smart Student Portal</title>
+    <title>AU Student Portal - Innovation Project</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* --- CSS TÍCH HỢP (DARK MODE) --- */
+        :root {
+            --bg: #000000;
+            --card: #121212;
+            --green: #2ecc71;
+            --red: #e74c3c;
+            --gold: #f1c40f;
+            --text: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: var(--text); }
+
+        .app-container {
+            background: var(--bg); width: 375px; height: 812px; border-radius: 40px; 
+            border: 8px solid #333; overflow-y: auto; position: relative; 
+            padding: 20px 15px 100px 15px; scrollbar-width: none;
+        }
+        .app-container::-webkit-scrollbar { display: none; }
+
+        /* Header */
+        .app-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333; margin-bottom: 10px; }
+        .avatar { width: 40px; height: 40px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--green); }
+        .gold-wallet { background: var(--gold); color: black; padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
+
+        /* Sections & Cards */
+        .section-title { font-size: 0.95rem; margin: 20px 0 10px 0; color: #888; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .stat-card { background: var(--card); padding: 15px; border-radius: 15px; }
+        .stat-card .label { font-size: 0.7rem; color: #666; }
+        .stat-card .value { font-size: 1.2rem; font-weight: 700; display: block; margin: 5px 0; }
+        .stat-card .trend { font-size: 0.6rem; color: var(--green); }
+        .mini-progress { height: 4px; background: #333; border-radius: 2px; margin-top: 5px; }
+        .fill { height: 100%; background: var(--green); }
+
+        .alert-card { background: rgba(231, 76, 60, 0.1); border: 1px solid var(--red); padding: 15px; border-radius: 15px; display: flex; gap: 10px; }
+        .schedule-item, .task-card { background: var(--card); padding: 15px; border-radius: 15px; display: flex; gap: 15px; margin-bottom: 10px; }
+        .active-class { border-left: 4px solid var(--green); }
+        .urgent { border-right: 4px solid var(--red); }
+        .time { color: var(--green); font-weight: 700; }
+
+        /* Profile */
+        .profile-header { text-align: center; padding: 20px 0; }
+        .large-avatar { font-size: 60px; margin-bottom: 10px; }
+        .menu-item { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 8px; display: flex; justify-content: space-between; }
+
+        /* Events */
+        .event-card-big { background: var(--green); color: black; padding: 20px; border-radius: 20px; margin-bottom: 15px; }
+        .event-card-big.alt { background: #333; color: white; }
+        .join-btn { background: black; color: white; border: none; padding: 8px 15px; border-radius: 10px; margin-top: 10px; cursor: pointer; }
+
+        /* Navigation */
+        .app-nav { position: sticky; bottom: -20px; left: -15px; width: calc(100% + 30px); height: 80px; background: #111; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; margin: 20px -15px -20px -15px; z-index: 100; }
+        .nav-item { text-decoration: none; color: #555; font-size: 0.65rem; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .nav-item.active { color: var(--green); font-weight: 700; }
+
+        /* Tab Logic */
+        .tab-pane { animation: fadeIn 0.3s ease; }
+        .hidden { display: none !important; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+    </style>
 </head>
 <body>
     <main class="app-container">
@@ -20,7 +84,21 @@
             <div class="gold-wallet">💰 30.00 Gold</div>
         </header>
 
-        <div id="home-tab" class="tab-pane active-pane">
+        <div id="home-tab" class="tab-pane">
+            <h2 class="section-title">Academic Performance</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="label">Current GPA</span>
+                    <span class="value">81.10</span>
+                    <span class="trend">↗ Good standing</span>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Attendance</span>
+                    <span class="value">91.3%</span>
+                    <div class="mini-progress"><div class="fill" style="width: 91%;"></div></div>
+                </div>
+            </div>
+
             <h2 class="section-title">Schedule Updates 🔔</h2>
             <div class="alert-card pulse">
                 <div class="alert-icon">⚠️</div>
@@ -29,44 +107,33 @@
                     <p>Math 101: Room A102 → <strong>B205</strong></p>
                 </div>
             </div>
+        </div>
 
-            <h2 class="section-title">Today's Schedule 📅</h2>
+        <div id="schedule-tab" class="tab-pane hidden">
+            <h2 class="section-title">Today's Timetable 📅</h2>
             <div class="schedule-item active-class">
                 <span class="time">08:00</span>
                 <div class="info"><strong>Design Thinking</strong><p>Hall C | Dr. Nguyen</p></div>
             </div>
-
-            <h2 class="section-title">Quick Tasks 📝</h2>
-            <div class="task-card urgent">
-                <input type="checkbox">
-                <div class="info"><strong>Video Script Final</strong><p>Due: Tomorrow, 23:59</p></div>
-            </div>
-        </div>
-
-        <div id="schedule-tab" class="tab-pane hidden">
-            <h2 class="section-title">Weekly Timetable</h2>
-            <div class="day-group">
-                <p class="day-label">Monday</p>
-                <div class="schedule-item"><span class="time">08:00</span><div class="info"><strong>Chinese 1</strong><p>Room D12</p></div></div>
-            </div>
-            <div class="day-group">
-                <p class="day-label">Tuesday</p>
-                <div class="schedule-item"><span class="time">13:30</span><div class="info"><strong>Critical Thinking</strong><p>Hall A</p></div></div>
+            <div class="schedule-item">
+                <span class="time">13:30</span>
+                <div class="info"><strong>Critical Thinking</strong><p>Room D12 | Prof. Tran</p></div>
             </div>
         </div>
 
         <div id="events-tab" class="tab-pane hidden">
+            <h2 class="section-title">Assignments 📝</h2>
+            <div class="task-card urgent">
+                <input type="checkbox">
+                <div class="info"><strong>Video Script Final</strong><p>Due: Tomorrow, 23:59</p></div>
+            </div>
+            
             <h2 class="section-title">Campus Events 🎉</h2>
             <div class="event-card-big">
                 <div class="badge">New</div>
                 <h3>Tech Workshop 2026</h3>
                 <p>Friday | Main Stadium</p>
-                <button class="join-btn">Register Now</button>
-            </div>
-            <div class="event-card-big alt">
-                <h3>AU Music Festival</h3>
-                <p>Next Sunday | Library Square</p>
-                <button class="join-btn">See Details</button>
+                <button class="join-btn">Register</button>
             </div>
         </div>
 
@@ -74,7 +141,7 @@
             <div class="profile-header">
                 <div class="large-avatar">👤</div>
                 <h2>User Name</h2>
-                <p>Freshman | Student Portal</p>
+                <p>tadashihunter07@gmail.com</p>
             </div>
             <div class="menu-list">
                 <div class="menu-item">Attendance Report <span>></span></div>
@@ -84,12 +151,38 @@
         </div>
 
         <nav class="app-nav">
-            <a href="#" class="nav-item active">🏠<span>Home</span></a>
-            <a href="#" class="nav-item">📅<span>Schedule</span></a>
-            <a href="#" class="nav-item">🎉<span>Events</span></a>
-            <a href="#" class="nav-item">👤<span>Profile</span></a>
+            <div class="nav-item active" onclick="switchTab(0)">🏠<span>Dash</span></div>
+            <div class="nav-item" onclick="switchTab(1)">📅<span>Schedule</span></div>
+            <div class="nav-item" onclick="switchTab(2)">🎉<span>Events</span></div>
+            <div class="nav-item" onclick="switchTab(3)">👤<span>Profile</span></div>
         </nav>
     </main>
-    <script src="script.js"></script>
+
+    <script>
+        /* --- JAVASCRIPT TÍCH HỢP --- */
+        function switchTab(index) {
+            const navItems = document.querySelectorAll('.nav-item');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            const tabIds = ['home-tab', 'schedule-tab', 'events-tab', 'profile-tab'];
+
+            // 1. Reset Nav
+            navItems.forEach(nav => nav.classList.remove('active'));
+            navItems[index].classList.add('active');
+
+            // 2. Switch Content
+            tabPanes.forEach(pane => pane.classList.add('hidden'));
+            document.getElementById(tabIds[index]).classList.remove('hidden');
+
+            // 3. Scroll top
+            document.querySelector('.app-container').scrollTop = 0;
+        }
+
+        // Thông báo vui khi hoàn thành Task
+        document.querySelectorAll('input[type="checkbox"]').forEach(box => {
+            box.addEventListener('change', function() {
+                if(this.checked) alert("Task marked as completed! Keep going! 🔥");
+            });
+        });
+    </script>
 </body>
 </html>
