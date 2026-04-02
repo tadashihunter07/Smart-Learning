@@ -3,83 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AU Smart Portal - Final Prototype</title>
+    <title>AU Smart Portal - Information Flow Solution</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --bg: #000; --card: #121212; --green: #2ecc71; --red: #e74c3c; --gold: #f1c40f; --text: #fff; }
+        /* --- CSS TÍCH HỢP (DARK MODE & UI) --- */
+        :root {
+            --bg: #000000;
+            --card: #121212;
+            --green: #2ecc71;
+            --red: #e74c3c;
+            --gold: #f1c40f;
+            --blue: #3498db;
+            --text: #ffffff;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background: #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: var(--text); }
-        .app-container { background: var(--bg); width: 375px; height: 812px; border-radius: 40px; border: 8px solid #333; overflow-y: auto; position: relative; padding: 20px 15px 100px 15px; scrollbar-width: none; }
+
+        .app-container {
+            background: var(--bg); width: 375px; height: 812px; border-radius: 40px; 
+            border: 8px solid #333; overflow-y: auto; position: relative; 
+            padding: 20px 15px 100px 15px; scrollbar-width: none;
+        }
         .app-container::-webkit-scrollbar { display: none; }
+
+        /* Header */
         .app-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333; margin-bottom: 10px; }
         .avatar { width: 40px; height: 40px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--green); }
         .gold-wallet { background: var(--gold); color: black; padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; }
-        .section-title { font-size: 0.95rem; margin: 20px 0 10px 0; color: #888; }
+
+        /* Performance Stats */
+        .section-title { font-size: 0.95rem; margin: 20px 0 10px 0; color: #888; display: flex; align-items: center; gap: 8px; }
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .stat-card { background: var(--card); padding: 15px; border-radius: 15px; }
         .stat-card .label { font-size: 0.7rem; color: #666; }
         .stat-card .value { font-size: 1.2rem; font-weight: 700; display: block; margin: 5px 0; }
         .mini-progress { height: 4px; background: #333; border-radius: 2px; margin-top: 5px; }
         .fill { height: 100%; background: var(--green); }
-        .alert-card { background: rgba(231, 76, 60, 0.1); border: 1px solid var(--red); padding: 15px; border-radius: 15px; display: flex; gap: 10px; }
+
+        /* Information Flow Elements */
+        .alert-card { background: rgba(231, 76, 60, 0.1); border: 1px solid var(--red); padding: 15px; border-radius: 15px; display: flex; gap: 10px; margin-bottom: 15px; }
+        .msg-card { background: var(--card); padding: 15px; border-radius: 15px; border-left: 4px solid var(--blue); margin-bottom: 10px; transition: 0.3s; }
+        .msg-card:hover { transform: translateX(5px); background: #1a1a1a; }
+        
         .schedule-item, .task-card { background: var(--card); padding: 15px; border-radius: 15px; display: flex; gap: 15px; margin-bottom: 10px; align-items: center; }
         .active-class { border-left: 4px solid var(--green); }
-        .urgent { border-left: 4px solid var(--red); }
-        .time { color: var(--green); font-weight: 700; font-size: 0.9rem; }
+        .time { color: var(--green); font-weight: 700; min-width: 50px; }
+
+        /* Navigation Bar */
         .app-nav { position: sticky; bottom: -20px; left: -15px; width: calc(100% + 30px); height: 80px; background: #111; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #333; margin: 20px -15px -20px -15px; z-index: 100; }
-        .nav-item { text-decoration: none; color: #555; font-size: 0.65rem; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .nav-item { text-decoration: none; color: #555; font-size: 0.65rem; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: 0.3s; }
         .nav-item.active { color: var(--green); font-weight: 700; }
+
+        /* Tab Logic */
+        .tab-pane { animation: fadeIn 0.4s ease-out; }
         .hidden { display: none !important; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
         .pulse { animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+
+        input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--green); cursor: pointer; }
     </style>
 </head>
 <body>
     <main class="app-container">
         <header class="app-header">
-            <div class="user-info"><div class="avatar">👤</div><div><h3>User Name</h3><p>AU Student Portal</p></div></div>
+            <div class="user-info">
+                <div class="avatar">👤</div>
+                <div>
+                    <h3>User Name</h3>
+                    <p>AU Student Portal</p>
+                </div>
+            </div>
             <div class="gold-wallet">💰 30.00 Gold</div>
         </header>
 
         <div id="home-tab" class="tab-pane">
-            <h2 class="section-title">Academic Performance</h2>
+            <h2 class="section-title">Academic Performance 📊</h2>
             <div class="stats-grid">
-                <div class="stat-card"><span class="label">GPA</span><span class="value">81.10</span><span style="color:var(--green);font-size:0.6rem">↗ Good standing</span></div>
-                <div class="stat-card"><span class="label">Attendance</span><span class="value">91.3%</span><div class="mini-progress"><div class="fill" style="width: 91%;"></div></div></div>
+                <div class="stat-card">
+                    <span class="label">Current GPA</span>
+                    <span class="value">81.10</span>
+                    <span style="color:var(--green); font-size:0.6rem">↗ Good standing</span>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Attendance</span>
+                    <span class="value">91.3%</span>
+                    <div class="mini-progress"><div class="fill" style="width: 91%;"></div></div>
+                </div>
             </div>
-            <h2 class="section-title">Schedule Updates 🔔</h2>
+
+            <h2 class="section-title">University Announcements 🏛️</h2>
             <div class="alert-card pulse">
                 <div class="alert-icon">⚠️</div>
-                <div class="alert-info"><strong>Room Change Alert</strong><p>Math 101: Room A102 → <strong>B205</strong></p></div>
+                <div class="alert-info">
+                    <strong>Schedule Update</strong>
+                    <p>Math 101: Room A102 → <strong>B205</strong></p>
+                    <span style="font-size:0.65rem; color:#888;">Broadcasted from Academic Office</span>
+                </div>
+            </div>
+
+            <h2 class="section-title">Lecturer's Direct Feed 👨‍🏫</h2>
+            <div class="msg-card">
+                <p style="font-size: 0.75rem; color: var(--blue);">Dr. Nguyen (Design Thinking):</p>
+                <p style="font-size: 0.85rem;">"Don't forget to upload your final video scripts by tonight! 11:59 PM is the hard deadline."</p>
             </div>
         </div>
 
         <div id="schedule-tab" class="tab-pane hidden">
-            <h2 class="section-title">Today's Timetable 📅</h2>
-            <div class="schedule-item active-class"><span class="time">08:00</span><div><strong>Design Thinking</strong><p>Hall C | Dr. Nguyen</p></div></div>
-            <div class="schedule-item"><span class="time">13:30</span><div><strong>Critical Thinking</strong><p>Room D12 | Prof. Tran</p></div></div>
+            <h2 class="section-title">Class Timetable 📅</h2>
+            <div class="schedule-item active-class">
+                <span class="time">08:00</span>
+                <div><strong>Design Thinking</strong><p>Hall C | Dr. Nguyen</p></div>
+            </div>
+            <div class="schedule-item">
+                <span class="time">13:30</span>
+                <div><strong>Critical Thinking</strong><p>Room D12 | Prof. Tran</p></div>
+            </div>
+            <div class="schedule-item" style="opacity: 0.5;">
+                <span class="time">15:45</span>
+                <div><strong>Physical Education</strong><p>Stadium | Coach Lam</p></div>
+            </div>
         </div>
 
         <div id="tasks-tab" class="tab-pane hidden">
             <h2 class="section-title">Assignments Due 📝</h2>
-            <div class="task-card urgent">
-                <input type="checkbox" style="width:20px;height:20px;accent-color:var(--green)">
-                <div><strong>Video Script Final</strong><p style="color:var(--red);font-size:0.8rem">Deadline: Tomorrow, 23:59</p></div>
+            <div class="task-card" style="border-left: 4px solid var(--red);">
+                <input type="checkbox">
+                <div style="margin-left: 10px;">
+                    <strong>Video Script Final</strong>
+                    <p style="font-size: 0.75rem; color: var(--red);">Deadline: Tomorrow</p>
+                </div>
             </div>
             <div class="task-card">
-                <input type="checkbox" style="width:20px;height:20px;accent-color:var(--green)">
-                <div><strong>Group Poster Design</strong><p style="color:var(--green);font-size:0.8rem">Deadline: Oct 25, 2025</p></div>
+                <input type="checkbox">
+                <div style="margin-left: 10px;">
+                    <strong>Group Poster Design</strong>
+                    <p style="font-size: 0.75rem; color: var(--green);">Deadline: Oct 25, 2025</p>
+                </div>
             </div>
-            <h2 class="section-title">Campus Events 🎉</h2>
-            <div style="background:var(--green);color:#000;padding:15px;border-radius:15px">
-                <strong>Tech Workshop 2026</strong><p>Friday | Main Stadium</p>
+
+            <h2 class="section-title">University Support 🤝</h2>
+            <div class="msg-card" style="border-left: 4px solid var(--green); cursor: pointer;" onclick="alert('Connecting to AU Support Live Chat...')">
+                <p><strong>IT Support Center:</strong></p>
+                <p style="font-size: 0.8rem;">Reporting network issues in Library? <br><span style="color:var(--green)">Tap to report now</span></p>
+            </div>
+            <div class="msg-card" style="border-left: 4px solid var(--gold);">
+                <p><strong>Finance Office:</strong></p>
+                <p style="font-size: 0.8rem;">Scholarship results for Semester 1 are now available for review.</p>
             </div>
         </div>
 
         <div id="profile-tab" class="tab-pane hidden">
-            <div style="text-align:center;padding:30px 0"><div style="font-size:60px">👤</div><h2>User Name</h2><p>tadashihunter07@gmail.com</p></div>
-            <div class="stat-card" style="margin-bottom:10px">Fee & Finance status: <strong>Paid</strong></div>
-            <div class="stat-card">Grade History: <strong>Available</strong></div>
+            <div style="text-align:center; padding:40px 0;">
+                <div style="font-size:60px; margin-bottom: 10px;">👤</div>
+                <h2>User Name</h2>
+                <p style="color:#888;">tadashihunter07@gmail.com</p>
+                <p style="font-size: 0.8rem; margin-top: 5px;">Freshman | Asia University</p>
+            </div>
+            <div class="msg-card">
+                <div style="display:flex; justify-content:space-between;">
+                    <span>Fee Status:</span> <span style="color:var(--green)">Paid</span>
+                </div>
+            </div>
+            <div class="msg-card">
+                <div style="display:flex; justify-content:space-between;">
+                    <span>Gold Wallet:</span> <span style="color:var(--gold)">30.00 AU Gold</span>
+                </div>
+            </div>
         </div>
 
         <nav class="app-nav">
@@ -91,16 +184,35 @@
     </main>
 
     <script>
+        /* --- JAVASCRIPT FOR SEAMLESS TAB SWITCHING --- */
         function switchTab(index) {
             const navItems = document.querySelectorAll('.nav-item');
             const tabPanes = document.querySelectorAll('.tab-pane');
             const tabIds = ['home-tab', 'schedule-tab', 'tasks-tab', 'profile-tab'];
+
+            // 1. Update Active State in Navigation
             navItems.forEach(nav => nav.classList.remove('active'));
             navItems[index].classList.add('active');
+
+            // 2. Switch Visibility of Content Panes
             tabPanes.forEach(pane => pane.classList.add('hidden'));
             document.getElementById(tabIds[index]).classList.remove('hidden');
-            document.querySelector('.app-container').scrollTop = 0;
+
+            // 3. Smooth Scroll to top when switching
+            document.querySelector('.app-container').scrollTo({ top: 0, behavior: 'smooth' });
         }
+
+        // Feature: Mock alert for task completion
+        document.querySelectorAll('input[type="checkbox"]').forEach(box => {
+            box.addEventListener('change', function() {
+                if(this.checked) {
+                    alert("Great job! Task completed. Keep up the good work! 🚀");
+                }
+            });
+        });
+
+        // Developer Console Log for Innovation Showcase
+        console.log("%cAU Smart Portal Prototype Loaded", "color: #2ecc71; font-weight: bold; font-size: 1.2rem;");
     </script>
 </body>
 </html>
