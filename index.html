@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AU Smart Student Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="app-container">
+        <header class="app-header">
+            <div class="user-info">
+                <div class="avatar">👤</div>
+                <div>
+                    <h3>User Name</h3>
+                    <p>Asia University Portal</p>
+                </div>
+            </div>
+            <div class="gold-wallet">💰 30.00 Gold</div>
+        </header>
+
+        <div id="home-tab" class="tab-pane active-pane">
+            <h2 class="section-title">Schedule Updates 🔔</h2>
+            <div class="alert-card pulse">
+                <div class="alert-icon">⚠️</div>
+                <div class="alert-info">
+                    <strong>Room Change Alert</strong>
+                    <p>Math 101: Room A102 → <strong>B205</strong></p>
+                </div>
+            </div>
+
+            <h2 class="section-title">Today's Schedule 📅</h2>
+            <div class="schedule-item active-class">
+                <span class="time">08:00</span>
+                <div class="info"><strong>Design Thinking</strong><p>Hall C | Dr. Nguyen</p></div>
+            </div>
+
+            <h2 class="section-title">Quick Tasks 📝</h2>
+            <div class="task-card urgent">
+                <input type="checkbox">
+                <div class="info"><strong>Video Script Final</strong><p>Due: Tomorrow, 23:59</p></div>
+            </div>
+        </div>
+
+        <div id="schedule-tab" class="tab-pane hidden">
+            <h2 class="section-title">Weekly Timetable</h2>
+            <div class="day-group">
+                <p class="day-label">Monday</p>
+                <div class="schedule-item"><span class="time">08:00</span><div class="info"><strong>Chinese 1</strong><p>Room D12</p></div></div>
+            </div>
+            <div class="day-group">
+                <p class="day-label">Tuesday</p>
+                <div class="schedule-item"><span class="time">13:30</span><div class="info"><strong>Critical Thinking</strong><p>Hall A</p></div></div>
+            </div>
+        </div>
+
+        <div id="events-tab" class="tab-pane hidden">
+            <h2 class="section-title">Campus Events 🎉</h2>
+            <div class="event-card-big">
+                <div class="badge">New</div>
+                <h3>Tech Workshop 2026</h3>
+                <p>Friday | Main Stadium</p>
+                <button class="join-btn">Register Now</button>
+            </div>
+            <div class="event-card-big alt">
+                <h3>AU Music Festival</h3>
+                <p>Next Sunday | Library Square</p>
+                <button class="join-btn">See Details</button>
+            </div>
+        </div>
+
+        <div id="profile-tab" class="tab-pane hidden">
+            <div class="profile-header">
+                <div class="large-avatar">👤</div>
+                <h2>User Name</h2>
+                <p>Freshman | Student Portal</p>
+            </div>
+            <div class="menu-list">
+                <div class="menu-item">Attendance Report <span>></span></div>
+                <div class="menu-item">Grade History <span>></span></div>
+                <div class="menu-item">Fee & Finance <span>></span></div>
+            </div>
+        </div>
+
+        <nav class="app-nav">
+            <a href="#" class="nav-item active">🏠<span>Home</span></a>
+            <a href="#" class="nav-item">📅<span>Schedule</span></a>
+            <a href="#" class="nav-item">🎉<span>Events</span></a>
+            <a href="#" class="nav-item">👤<span>Profile</span></a>
+        </nav>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
